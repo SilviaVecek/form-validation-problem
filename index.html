@@ -18,7 +18,7 @@
         }
 
         h1, h3 {
-            color: #576774;
+            color: #4e4e4e;
         }
 
         h1:first-child {
@@ -52,7 +52,7 @@
         input[type='text'],
         input[type='password'],
         input[type='submit'],
-        input[type="email"]
+        input[type="email"],
         select {
             font-size: 1em;
             border-radius: .25em;
@@ -61,7 +61,8 @@
 
         input[type='text'],
         input[type='password'],
-        input[type="email"]{
+        input[type="email"],
+        select {
             border: solid 1px #ddd;
             padding: .5em .5em;
             color: #555;
@@ -85,11 +86,9 @@
             background: #3D6EAC;
         }
 
-
-
-
         input[type='text']:focus,
         input[type='password']:focus,
+        input[type='email']:focus,
         input[type='submit']:focus {
             outline: none;
             border-color: #0B77DB;
@@ -102,14 +101,14 @@
         }
 
 
-
-
         label + input[type=checkbox] {
             margin-left: 1em;
         }
 
         select {
             width: 17em;
+            padding-left: 0.5em;
+            color: black;
         }
 
         fieldset {
@@ -124,6 +123,14 @@
         .label {
             width: 10em;
             display: inline-block;
+        }
+
+        .description {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            font-weight: bold;
+            color: rgb(92, 92, 92);
         }
 
         /*
@@ -214,23 +221,24 @@
     <form method='post' action=''>
         <h1>Fill out this awesome form</h1>
         <fieldset>
-            <h3>Your details</h3>
+            <h3>Your Details</h3>
             <p>
-                <label class='label' for='email'>
+                <label id="emailLabel" class='label' for='email'>
                     Email
                 </label>
-                <input type='email' id='email' name='email' required>
+                <input type='email' id='email' name='email' aria-labelledby="emailLabel" placeholder="joe@example.com" required>
             </p>
             <p>
-                <label class='label' for='password'>
-                    Password (8 characters minimum)
+                <label id="passwordLabel" class='label' for='password'>
+                    Password 
                 </label>
-                <input class='error' type='password' id='password' name='username' minlength="8" required>
+                <input class='error' type='password' id='password' name='username' minlength="8" aria-labelledby="passwordLabel" aria-describedby="passwordDesc" required>
+                <span class="description" id="passwordDesc" tabindex="-1">(8 characters min)</span>
             </p>
         </fieldset>
 
         <fieldset>
-            <h3>Your animal</h3>
+            <h3>Your Animal</h3>
             <p>
                 <label class='label' for='colour'>
                     Colour
@@ -245,10 +253,10 @@
                 </select>
             </p>
             <p class="animal">
-                <span class="label">
-                    Animal (select two)
-                </span>
-
+                    <span class="label" aria-describedby="animalDesc">
+                            Animal 
+                    </span>
+                
                 <input type='checkbox' name='animal' value='bear' id='bear'>
                 <label for='bear'>
                      Bear
@@ -268,13 +276,16 @@
                 <label for='donkey'>
                      Donkey
                 </label>
+                <span class="description" id="animalDesc" >
+                        (select two)
+                </span>
 
             </p>
             <p>
-                <label class='label' for='tiger_type'>
+                <label id="tigerTypeLabel" class='label' for='tiger_type'>
                     Type of tiger
                 </label>
-                <input type='text' name='tiger_type' id='tiger_type' onchange="">
+                <input type='text' name='tiger_type' id='tiger_type' aria-labelledby="tigerTypeLabel" onchange="">
             </p>
         </fieldset>
         <fieldset>
