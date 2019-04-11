@@ -133,6 +133,28 @@
             color: rgb(92, 92, 92);
         }
 
+        .tiger::placeholder {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .animal--selection {
+            display: flex;
+        }
+
+        .animal--checkbox {
+            margin: auto 0;
+        }
+
+        @media only screen and (max-width: 565px) {
+            .animal--selection {
+                flex-direction: column;
+                margin: 1em 0;
+            }
+            .animal {
+                margin-bottom: 0.2em;
+            }
+        }
         /*
             -------------------------------------------------------------------
             Error states
@@ -252,40 +274,46 @@
                     <option value='brown'>Brown</option>
                 </select>
             </p>
-            <p class="animal">
-                    <span class="label" aria-describedby="animalDesc">
+            <div class="animal--selection">
+                <div class="animal">
+                    <label class="label" aria-describedby="animalDesc">
                             Animal 
+                    </label>
+                    <span class="description" id="animalDesc" >
+                            (select two)
                     </span>
-                
-                <input type='checkbox' name='animal' value='bear' id='bear'>
-                <label for='bear'>
-                     Bear
-                </label>
+                </div>
+                <div class="animal--checkbox">
+                    <input type='checkbox' name='animal' value='bear' id='bear'>
+                    <label for='bear'>
+                            Bear
+                    </label>
 
-                <input type='checkbox' name='animal' value='tiger' id='tiger' onchange="tigerTicked()">
-                <label for='tiger'>
-                    Tiger
-                </label>
+                    <input type='checkbox' name='animal' value='tiger' id='tiger' onchange="tigerTicked()">
+                    <label for='tiger'>
+                        Tiger
+                    </label>
+    
+                    <input type='checkbox' name='animal' value='snake' id='snake'>
+                    <label for='snake'>
+                            Snake
+                    </label>
+    
+                    <input type='checkbox' name='animal' value='donkey' id='donkey'>
+                    <label for='donkey'>
+                            Donkey
+                    </label>
 
-                <input type='checkbox' name='animal' value='snake' id='snake'>
-                <label for='snake'>
-                     Snake
-                </label>
-
-                <input type='checkbox' name='animal' value='donkey' id='donkey'>
-                <label for='donkey'>
-                     Donkey
-                </label>
-                <span class="description" id="animalDesc" >
-                        (select two)
-                </span>
-
-            </p>
+                </div>
+            </div>
             <p>
                 <label id="tigerTypeLabel" class='label' for='tiger_type'>
                     Type of tiger
                 </label>
-                <input type='text' name='tiger_type' id='tiger_type' aria-labelledby="tigerTypeLabel" onchange="">
+                <input class="tiger" type='text' name='tiger_type' id='tiger_type' aria-labelledby="tigerTypeLabel" placeholder="example: Sumatran" onchange="">
+                <span class="description" id="animalDesc" >
+                        (fill in if tiger selected)
+                </span>
             </p>
         </fieldset>
         <fieldset>
