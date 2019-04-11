@@ -52,6 +52,7 @@
         input[type='text'],
         input[type='password'],
         input[type='submit'],
+        input[type="email"]
         select {
             font-size: 1em;
             border-radius: .25em;
@@ -59,7 +60,8 @@
         }
 
         input[type='text'],
-        input[type='password'] {
+        input[type='password'],
+        input[type="email"]{
             border: solid 1px #ddd;
             padding: .5em .5em;
             color: #555;
@@ -146,6 +148,66 @@
         }
 
     </style>
+    <script>
+        // twoAnimalsChosen returns true when the user has checked at least two animals within the form
+        function twoAnimalsChosen() {
+            let animalCheckbox = document.getElementsByName('animal');
+            let animalLength = animalCheckbox.length;
+            
+            let count = 0;
+            for (let i = 0; i < animalLength; i++) {
+                if(animalCheckbox[i].checked) {
+                    count ++;
+                }
+            }
+            if (count < 2) {
+                document.querySelector('.animal').setAttribute("class", "error")
+                alert("Please select at least two animals")
+                return false
+            }
+            return true;
+        }
+        
+        // tigerTicked checks if the tiger checkbox has been checked - if yes then the type of tiger is required. 
+        // Function also checks if user has unticked it which makes type of tiger not required
+        function tigerTicked() {
+            let tigerCheckbox = document.getElementById('tiger');
+            if (tigerCheckbox.checked) {
+                document.getElementById("tiger_type").setAttribute("required", "required");
+                return true;
+            } 
+            if (!tigerCheckbox.checked) {
+                document.getElementById("tiger_type").required = false;
+                return false;
+            }
+        }
+
+        // tigerString checks if the text entered isn't a number aka a string
+        function tigerString() {
+            let tigerText = document.getElementById("tiger_type");
+            if (tigerTicked()) {
+                if (!isNaN(tigerText.value)) {
+                    alert("Enter a type of tiger (text)")
+                    return false
+                }
+                return true
+            }
+            return true
+        }
+
+        function handleSubmit(event) {
+            if (!tigerString() || !twoAnimalsChosen()) {
+                event.preventDefault();
+            } else {
+                alert("You've successfully created an account!")
+            }
+        }
+
+        window.onload = function initialise() {
+            document.querySelector("form").addEventListener("submit", handleSubmit)
+        }
+
+    </script>
 </head>
 
 <body>
@@ -157,13 +219,13 @@
                 <label class='label' for='email'>
                     Email
                 </label>
-                <input type='text' id='email' name='email'>
+                <input type='email' id='email' name='email' required>
             </p>
             <p>
                 <label class='label' for='password'>
-                    Password
+                    Password (8 characters minimum)
                 </label>
-                <input class='error' type='password' id='password' name='username'>
+                <input class='error' type='password' id='password' name='username' minlength="8" required>
             </p>
         </fieldset>
 
@@ -173,7 +235,7 @@
                 <label class='label' for='colour'>
                     Colour
                 </label>
-                <select name='colour' id='colour'>
+                <select name='colour' id='colour' required>
                     <option value=''>Choose colour</option>
                     <option value='blue'>Blue</option>
                     <option value='green'>Green</option>
@@ -182,9 +244,9 @@
                     <option value='brown'>Brown</option>
                 </select>
             </p>
-            <p>
+            <p class="animal">
                 <span class="label">
-                    Animal
+                    Animal (select two)
                 </span>
 
                 <input type='checkbox' name='animal' value='bear' id='bear'>
@@ -192,7 +254,7 @@
                      Bear
                 </label>
 
-                <input type='checkbox' name='animal' value='tiger' id='tiger'>
+                <input type='checkbox' name='animal' value='tiger' id='tiger' onchange="tigerTicked()">
                 <label for='tiger'>
                     Tiger
                 </label>
@@ -212,14 +274,16 @@
                 <label class='label' for='tiger_type'>
                     Type of tiger
                 </label>
-                <input type='text' name='tiger_type' id='tiger_type'>
+                <input type='text' name='tiger_type' id='tiger_type' onchange="">
             </p>
         </fieldset>
         <fieldset>
             <p>
-                <input type='submit' value='Create account'>
+                <input type='submit' value='Create account' >
             </p>
         </fieldset>
     </form>
+
 </body>
 </html>
+
